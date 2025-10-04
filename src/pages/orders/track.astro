@@ -1,0 +1,20 @@
+---
+import { OrderLookup } from "@/components/orders/OrderLookup";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+---
+
+<!-- filepath: c:\Users\Ehsan\Desktop\cazzert-site\src\pages\orders\track.astro -->
+<MainLayout title="Track Your Order | Cazzert">
+  <main class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-2xl">
+      <div class="mb-8 text-center">
+        <h1 class="font-Secondary text-text-base mb-2 text-3xl font-bold">Track Your Order</h1>
+        <p class="text-text-muted">Enter your order number and email to check your order status</p>
+      </div>
+
+      <OrderLookup client:load />
+    </div>
+  </main>
+</MainLayout>

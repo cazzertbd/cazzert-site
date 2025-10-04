@@ -1,0 +1,43 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Bundler",
+    "types": ["astro/client", "vite/client"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "incremental": true,
+    "noEmit": true
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "types/**/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.astro"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.stories.tsx"
+  ]
+}

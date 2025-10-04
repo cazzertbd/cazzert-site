@@ -1,0 +1,24 @@
+---
+import { UserManagement } from "@/components/admin/users/UserManagement";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { auth } from "@/lib";
+
+export const prerender = false;
+
+// Check admin permission
+const authCheck = await auth.authenticateUser(Astro);
+
+if (!authCheck.user) {
+  return Astro.redirect("/login?redirectTo=/admin/users");
+}
+
+if (authCheck.user.role !== "ADMIN") {
+  return Astro.redirect("/unauthorized");
+}
+---
+
+<MainLayout title="User Management | Admin | Cazzert">
+  <main class="container mx-auto p-4">
+    <UserManagement client:load currentUser={authCheck.user} />
+  </main>
+</MainLayout>

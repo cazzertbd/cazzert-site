@@ -1,0 +1,41 @@
+---
+import SignupForm from "@/components/signup/SignupForm";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+---
+
+<MainLayout title="Sign Up | Cazzert">
+  <main class="bg-bg relative min-h-[calc(100vh-5rem)] w-full">
+    <!-- Content -->
+    <div class="relative flex min-h-[calc(100vh-5rem)] items-center justify-center px-4 py-12">
+      <div class="w-full max-w-lg">
+        <!-- Signup Form -->
+        <SignupForm client:load />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<style>
+  /* Enhanced input focus effects */
+  .form-group input:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -5px rgba(209, 142, 164, 0.2);
+  }
+
+  /* Button hover enhancements */
+  button:hover:not(:disabled) {
+    box-shadow: 0 8px 25px rgba(209, 142, 164, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Dark theme adjustments */
+  html.dark .form-group input:focus {
+    box-shadow: 0 10px 25px -5px rgba(229, 169, 189, 0.3);
+  }
+
+  html.dark button:hover:not(:disabled) {
+    box-shadow: 0 8px 25px rgba(229, 169, 189, 0.5);
+  }
+</style>

@@ -1,0 +1,53 @@
+{
+  "name": "astro-starter-template",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "bunx prisma generate && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "prisma:seed": "bun prisma/seed.ts",
+    "prisma:push": "bunx prisma db push",
+    "prisma:migrate": "bunx prisma migrate dev",
+    "prisma:deploy": "bunx prisma migrate deploy",
+    "prisma:generate": "bunx prisma generate",
+    "prisma:reset": "bunx prisma migrate reset",
+    "prisma:format": "bunx prisma format",
+    "prisma:studio": "bunx prisma studio"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.5.1",
+    "@astrojs/vercel": "^8.2.7",
+    "@cloudinary/react": "^1.14.3",
+    "@cloudinary/url-gen": "^1.22.0",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.49",
+    "@iconify-json/simple-line-icons": "^1.2.1",
+    "@prisma/client": "^6.15.0",
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "astro": "^5.13.5",
+    "astro-icon": "^1.1.5",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "tailwindcss": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^6.4.19",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "prisma": "^6.15.0"
+  }
+}

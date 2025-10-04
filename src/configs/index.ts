@@ -1,0 +1,1 @@
+export { cookieConfig } from "./cookieConfigs";

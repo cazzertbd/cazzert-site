@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/vercel-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          UserRole       @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  refreshTokens RefreshToken[]
+  orders        Order[]
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  otp       String
+  email     String
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([otp])
+  @@index([createdAt])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+
+  products  Product[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  price       Float
+  weight      Float?      // in grams
+  stock       Int?        @default(0)
+  badge       ProductBadge?
+  description String?
+  details     String[]    @default([])
+  images      String[]    @default([])
+
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  orderItems  OrderItem[]
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@index([badge])
+}
+
+enum ProductBadge {
+  BESTSELLER
+  NEW
+  LIMITED
+  SEASONAL
+  FEATURED
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  orderNumber     String        @unique // Human-readable order number (e.g., "ORD-2024-001")
+  status          OrderStatus   @default(PENDING)
+  
+  // Customer Information
+  userId          String?       // Optional - for guest orders
+  user            User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+  
+  // Delivery Information
+  deliveryAddress String?
+  deliveryDate    DateTime?     // Requested delivery date
+  deliveryTime    String?       // Requested delivery time slot
+  deliveryNotes   String?       // Special delivery instructions
+  
+  // Order Details
+  items           OrderItem[]
+  subtotal        Float         // Sum of all items
+  deliveryFee     Float         @default(0)
+  tax             Float         @default(0)
+  discount        Float         @default(0)
+  total           Float         // Final amount
+  
+  // Payment Information
+  paymentMethod   PaymentMethod?
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentId       String?       // External payment provider ID
+  
+  // Order Tracking
+  notes           String?       // Internal notes for staff
+  estimatedReady  DateTime?     // When order will be ready
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([customerEmail])
+  @@index([orderNumber])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  quantity  Int
+  unitPrice Float   // Price at time of order (for historical accuracy)
+  subtotal  Float   // quantity * unitPrice
+  
+  // Custom options (for future use)
+  customization String? // JSON string for custom cake details, messages, etc.
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum OrderStatus {
+  PENDING       // Order received, awaiting confirmation
+  CONFIRMED     // Order confirmed, payment pending
+  PAID          // Payment received, order in queue
+  PREPARING     // Order is being prepared/baked
+  READY         // Order ready for pickup/delivery
+  OUT_FOR_DELIVERY // Order out for delivery
+  DELIVERED     // Order successfully delivered
+  COMPLETED     // Order completed (customer confirmed receipt)
+  CANCELLED     // Order cancelled
+  REFUNDED      // Order refunded
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  BANK_TRANSFER
+  MOBILE_BANKING  // bKash, Nagad, Rocket etc.
+  CARD           // Credit/Debit card
+}
+
+enum PaymentStatus {
+  PENDING       // Payment not yet made
+  PROCESSING    // Payment being processed
+  PAID          // Payment successful
+  FAILED        // Payment failed
+  REFUNDED      // Payment refunded
+  PARTIAL       // Partial payment received
+}
+

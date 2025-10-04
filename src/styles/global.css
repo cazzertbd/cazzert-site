@@ -1,0 +1,452 @@
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;700&display=swap");
+
+/* Tailwind CSS */
+@import "tailwindcss";
+
+@layer base {
+  :root,
+  [data-theme="light"] {
+    /* Light Theme Palette (Default) */
+    --bg: #fff8f5;
+    --bg-alt: #ffffff;
+    --bg-footer: #f0e5e9;
+    --bg-feature-card: #ffffff;
+    --bg-cta: #fce3eb;
+    --bg-cta-end: #f9dbe7;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --text-base: #4a4a4a;
+    --text-muted: #6b5a5f;
+    --text-subtle: #a08c93;
+    --text-light: #ffffff;
+    --text-price: #383838;
+    --primary: #d18ea4;
+    --primary-light: #e5a9bd;
+    --primary-dark: #b7788f;
+    --accent-gold: #b18a5a;
+    --accent-gold-bg: #f5e8d7;
+    --accent-grey: #5f5f5f;
+    --accent-grey-bg: #e0e0e0;
+    --border: #e5a9bd;
+    --border-light: #e2e8f0;
+
+    --border-radius-base: 0.5rem;
+    --border-radius-lg: 0.75rem;
+    --border-radius-full: 9999px;
+
+    --scroll-bg: var(--bg-cta);
+    --scroll-main: var(--primary);
+
+    --font-primary: "Lato", sans-serif;
+    --font-secondary: "Playfair Display", serif;
+  }
+
+  /* Dark Theme Variables - Applied when html has .dark class */
+  html.dark,
+  [data-theme="dark"] {
+    --bg: #2d2a2e;
+    --bg-alt: #3a363b;
+    --bg-footer: #252226;
+    --bg-feature-card: #3a363b;
+    --bg-cta: #4a3a40;
+    --bg-cta-end: #5c4a51;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+    --text-base: #f0e5e9;
+    --text-muted: #c0b2b7;
+    --text-subtle: #a08c93;
+    --text-light: #2d2a2e; /* Used on primary buttons */
+    --text-price: #ffffff;
+    --primary: #e5a9bd; /* Lighter primary */
+    --primary-light: #f0cdd7;
+    --primary-dark: #d18ea4;
+    --accent-gold: #c4a27a;
+    --accent-gold-bg: #4a4136;
+    --accent-grey: #a0a0a0;
+    --accent-grey-bg: #505050;
+    --border: #5f5a60;
+    --border-light: #4f4a50;
+  }
+}
+
+@theme {
+  /* BG Colors */
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-bg-footer: var(--bg-footer);
+  --color-bg-feature-card: var(--bg-feature-card);
+  --color-bg-cta: var(--bg-cta);
+  --color-bg-cta-end: var(--bg-cta-end);
+  --color-bg-overlay: var(--bg-overlay);
+
+  /* Text Colors */
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-text-light: var(--text-light);
+  --color-text-price: var(--text-price);
+
+  /* Primary Colors */
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+
+  /* Accent Colors */
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-gold-bg: var(--accent-gold-bg);
+  --color-accent-grey: var(--accent-grey);
+  --color-accent-grey-bg: var(--accent-grey-bg);
+
+  /* Border Colors */
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+
+  /* Fonts */
+  --font-Inter:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  --font-Playfair: "Playfair Display", serif;
+
+  --font-Primary: "Lato", sans-serif;
+  --font-Secondary: "Playfair Display", serif;
+}
+
+@custom-variant hover (&:hover);
+
+body {
+  @apply text-text-base bg-bg grid min-h-screen min-w-full grid-rows-[auto_1fr_auto];
+  @apply font-Primary scroll-smooth leading-6 antialiased;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-main) var(--scroll-bg);
+  scroll-behavior: smooth;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-bg);
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-main);
+  border-radius: 8px;
+  border: 3px solid var(--scroll-bg);
+  transition: background-color 0.2s ease;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-serif {
+  font-family: var(--font-secondary);
+  color: var(--text-base);
+}
+
+/* ===========================================
+   FORM ELEMENTS STYLES
+   =========================================== */
+
+/* Select Elements - Only apply to elements without custom classes */
+select:not([class*="focus:border"]):not([class*="focus:ring"]) {
+  background-color: var(--bg-alt);
+  color: var(--text-base);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-base);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: var(--font-primary);
+  line-height: 1.5;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d18ea4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+select:not([class*="focus:border"]):not([class*="focus:ring"]):focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(209, 142, 164, 0.1);
+}
+
+select:not([class*="focus:border"]):not([class*="focus:ring"]):disabled {
+  background-color: var(--accent-grey-bg);
+  color: var(--text-subtle);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Option styling - Limited cross-browser support, but helps where possible */
+select option {
+  background-color: var(--bg-alt);
+  color: var(--text-base);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+}
+
+/* Dark theme select arrow */
+html.dark select:not([class*="focus:border"]):not([class*="focus:ring"]) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e5a9bd' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* Input Elements - Only apply basic styles to elements without custom classes */
+input[type="text"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="email"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="password"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="number"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="tel"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="url"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="date"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+input[type="time"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ),
+textarea:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ) {
+  background-color: var(--bg-alt);
+  color: var(--text-base);
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius-base);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: var(--font-primary);
+  line-height: 1.5;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="text"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="email"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="password"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="number"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="tel"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="url"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="date"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+input[type="time"]:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus,
+textarea:not([class*="pl-"]):not([class*="focus:border"]):not(
+    [class*="focus:ring"]
+  ):focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(209, 142, 164, 0.1);
+}
+
+/* Placeholder styling - Apply globally but won't affect functionality */
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-subtle);
+  opacity: 1;
+}
+
+/* Disabled state styling - Apply globally */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--accent-grey-bg);
+  color: var(--text-subtle);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===========================================
+   CAKE CARD COMPONENT STYLES
+   =========================================== */
+
+.cake-card {
+  background-color: var(--bg-feature-card);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+  border: 1px solid var(--border-light);
+}
+
+html.dark .cake-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cake-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}
+
+html.dark .cake-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cake-card-image-link {
+  display: block;
+  overflow: hidden;
+}
+
+.cake-card img {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cake-card:hover img {
+  transform: scale(1.08);
+}
+
+.cake-card-content {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+@media (min-width: 768px) {
+  .cake-card-content {
+    padding: 1.25rem;
+  }
+}
+
+.cake-card-title {
+  font-size: 1.125rem;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+  color: var(--text-base);
+}
+
+.cake-card-desc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  min-height: 3rem;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.cake-card-price {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-price);
+  margin-bottom: 0.75rem;
+}
+
+.add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.625rem 1rem;
+  border-radius: var(--border-radius-base);
+  background-color: var(--primary-light);
+  color: var(--text-light);
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--primary);
+}
+
+.add-to-cart-btn svg {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* ===========================================
+   FOOTER STYLES
+   =========================================== */
+
+footer {
+  background-color: var(--bg-footer);
+  transition: background-color 0.3s ease;
+}
+
+/* ===========================================
+   ABOUT SECTION STYLES
+   =========================================== */
+
+.about-feature {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 1rem;
+  background-color: var(--bg);
+  border-radius: var(--border-radius-base);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-left-width: 4px;
+  border-color: var(--primary-light);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.about-feature svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary-light);
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.about-feature h4 {
+  font-weight: 600;
+  color: var(--text-base);
+  margin-bottom: 0.25rem;
+}
+
+.about-feature p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,33 @@
+---
+import { ProductService } from "@/services/ProductService";
+import Product from "../../product/Product.tsx";
+export const prerender = false;
+const products = await ProductService.getFeaturedProducts();
+---
+
+<section id="featured" class="bg-bg py-16 transition-colors duration-300 md:py-24">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="font-Secondary mb-4 text-3xl font-semibold md:text-4xl">Our Signature Cakes</h2>
+    <p class="text-text-muted mx-auto mb-12 max-w-2xl text-lg">Handpicked favorites, showcasing our passion for flavor and design.</p>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      {products?.map((product) => <Product client:load product={product} />)}
+    </div>
+
+    <a href="/products" class="btn border-border hover:bg-primary-light/10 text-primary mt-12 inline-block rounded-[var(--border-radius-base)] border-2 px-8 py-3 font-semibold transition duration-300"> Browse All Cakes </a>
+  </div>
+</section>
+
+<style>
+  /* Improved focus states for better accessibility */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

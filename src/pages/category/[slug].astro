@@ -1,0 +1,31 @@
+---
+import ProductsPage from "@/components/product/ProductsPage";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { prisma } from "@/lib";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+// get category by slug
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+const category = await prisma.category.findUnique({
+  where: { slug },
+});
+
+if (!category) {
+  return Astro.redirect("/404");
+}
+
+const title = `${category.name} - Cazzert Cakes`;
+const description = `Browse our ${category.name} collection. Handcrafted cakes made with premium ingredients and attention to detail.`;
+---
+
+<MainLayout title={title} description={description} ogType="website" ogUrl={Astro.url.toString()}>
+  <main>
+    <ProductsPage category={category} client:load />
+  </main>
+</MainLayout>

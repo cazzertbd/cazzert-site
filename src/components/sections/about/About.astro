@@ -1,0 +1,219 @@
+---
+import bgPattern from "@/assets/images/bakery-seamless-pattern-food-vector-background-black-white-color-confectionery-products_787654-915.jpg";
+import { Icon } from "astro-icon/components";
+
+// Define the feature data structure
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+// Create an array of features
+const features: Feature[] = [
+  {
+    icon: "simple-line-icons:star",
+    title: "Finest Ingredients",
+    description: "Premium, locally-sourced ingredients selected for exceptional flavor and quality in every bite.",
+  },
+  {
+    icon: "mdi:design",
+    title: "Custom Designs",
+    description: "Bespoke creations tailored to your vision, meticulously crafted for your special occasions.",
+  },
+  {
+    icon: "mdi:go-kart-track",
+    title: "Artisanal Craftsmanship",
+    description: "Each cake is handcrafted with precision by our skilled pastry chefs with years of experience.",
+  },
+  {
+    icon: "simple-line-icons:heart",
+    title: "Made with Love",
+    description: "We pour our passion into every creation, ensuring each dessert is a memorable experience.",
+  },
+];
+---
+
+<section id="about" class="bg-bg-alt relative overflow-hidden py-24 transition-colors duration-300 md:py-32">
+  <!-- Enhanced decorative elements -->
+  <div class="about-bg-opacity absolute inset-0">
+    <img class="h-full w-full object-cover" src={bgPattern.src} alt="" aria-hidden="true" />
+  </div>
+
+  <!-- Floating geometric shapes -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="bg-primary/8 absolute -top-32 -right-32 h-96 w-96 rounded-full blur-3xl animate-float"></div>
+    <div class="bg-primary/5 absolute -bottom-40 -left-40 h-80 w-80 rounded-full blur-2xl animate-float-delayed"></div>
+    <div class="bg-primary/3 absolute top-1/3 right-1/4 h-64 w-64 rounded-full blur-xl animate-pulse"></div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+    <div class="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-24 xl:gap-28 2xl:gap-32 items-center">
+      
+      <!-- Content Column -->
+      <div class="flex flex-col justify-center space-y-8">
+        <!-- Enhanced section badge -->
+        <div class="flex items-center justify-center lg:justify-start">
+          <div class="relative flex items-center">
+            <div class="bg-primary mr-4 h-0.5 w-16 rounded-full"></div>
+            <span class="text-primary text-sm font-semibold tracking-[0.2em] uppercase">Our Story</span>
+            <div class="bg-primary/30 ml-4 h-0.5 w-8 rounded-full"></div>
+          </div>
+        </div>
+
+        <!-- Enhanced heading -->
+        <h2 class="font-Secondary text-center text-4xl font-bold leading-[1.1] md:text-5xl lg:text-left xl:text-6xl">
+          <span class="text-text-base">Baked with</span>
+          <br />
+          <span class="text-primary">Passion</span>
+          <span class="text-text-base"> & </span>
+          <span class="text-primary">Precision</span>
+        </h2>
+
+        <!-- Enhanced description -->
+        <div class="relative">
+          <p class="text-text-muted text-center text-lg leading-relaxed lg:text-left xl:text-xl max-w-2xl">
+            Since 2021, <span class="text-primary font-semibold">Cazzert</span> has believed every cake tells a story. We use only the finest, freshest ingredients and pour our hearts into every creation. Our team of skilled pastry artists combines traditional techniques with innovative designs to create desserts that taste as spectacular as they look.
+          </p>
+        </div>
+
+        <!-- Enhanced Features grid -->
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:gap-8 pt-4">
+          {
+            features.map((feature, index) => (
+              <div class={`about-feature group relative overflow-hidden rounded-2xl border border-border-light/50 bg-bg/80 backdrop-blur-sm p-6 transition-all duration-500 hover:border-primary/40 hover:shadow-xl hover:bg-bg xl:p-8`} style={`animation-delay: ${index * 150}ms`}>
+                
+                <!-- Background glow effect -->
+                <div class="absolute inset-0 bg-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100 rounded-2xl"></div>
+                
+                <div class="relative flex items-center space-x-5">
+                  <!-- Enhanced icon with glow effect -->
+                  <div class="relative">
+                    <div class="bg-primary/10 text-primary group-hover:bg-primary/15 group-hover:text-white flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 xl:h-18 xl:w-18 shadow-lg group-hover:shadow-xl">
+                      <Icon name={feature.icon} class="h-8 w-8 xl:h-9 xl:w-9" />
+                    </div>
+                    <!-- Icon glow -->
+                    <div class="absolute inset-0 bg-primary/20 rounded-xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+                  </div>
+                  
+                  <div class="flex-1 pt-2">
+                    <h4 class="text-text-base mb-3 text-xl font-bold transition-colors duration-300 group-hover:text-primary xl:text-2xl">{feature.title}</h4>
+                    <p class="text-text-muted text-sm leading-relaxed transition-colors duration-300 xl:text-base group-hover:text-text-base/90">{feature.description}</p>
+                  </div>
+                </div>
+
+                <!-- Enhanced decorative elements -->
+                <div class="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary to-primary-light transition-all duration-500 group-hover:w-full rounded-full"></div>
+                <div class="absolute top-0 right-0 h-20 w-20 translate-x-10 -translate-y-10 transform rounded-full bg-primary/5 transition-transform duration-500 group-hover:translate-x-8 group-hover:-translate-y-8"></div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Enhanced Image Column -->
+      <div class="flex items-center justify-center lg:justify-center">
+        <div class="relative w-full max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+          
+          <!-- Main image container with enhanced styling -->
+          <div class="relative group">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl blur-2xl group-hover:blur-xl transition-all duration-700"></div>
+            
+            <div class="relative overflow-hidden rounded-3xl shadow-2xl transition-all duration-700 group-hover:shadow-3xl">
+              <img 
+                src="/images/Baker_decorating.jpg" 
+                alt="Baker decorating a cake with care" 
+                class="h-auto w-full object-cover transition-all duration-700 group-hover:scale-105" 
+                loading="eager" 
+              />
+              
+              <!-- Image overlay with subtle gradient -->
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+          </div>
+
+          <!-- Enhanced floating decorative elements -->
+          <div class="bg-gradient-to-br from-primary/25 to-primary/15 absolute -right-6 -bottom-6 h-32 w-32 rounded-3xl transition-all duration-700 hover:rotate-12 hover:scale-110 xl:-right-8 xl:-bottom-8 xl:h-40 xl:w-40 shadow-lg"></div>
+          <div class="bg-gradient-to-br from-primary/15 to-primary/10 absolute -top-6 -left-6 h-32 w-32 rounded-3xl transition-all duration-700 hover:-rotate-12 hover:scale-110 xl:-top-8 xl:-left-8 xl:h-40 xl:w-40 shadow-lg"></div>
+
+          <!-- Floating accent elements -->
+          <div class="absolute top-1/4 -right-8 animate-float">
+            <div class="bg-primary h-6 w-6 rounded-full shadow-lg opacity-60 xl:h-8 xl:w-8"></div>
+          </div>
+          <div class="absolute bottom-1/3 -left-8 animate-float-delayed">
+            <div class="bg-primary/70 h-4 w-4 rounded-full shadow-lg xl:h-6 xl:w-6"></div>
+          </div>
+          <div class="absolute top-1/2 right-0 animate-pulse">
+            <div class="bg-primary/40 h-3 w-3 rounded-full shadow-lg xl:h-4 xl:w-4"></div>
+          </div>
+
+          <!-- Quality badge -->
+          <div class="absolute top-8 -left-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg xl:top-12 xl:-left-6 xl:px-6 xl:py-3 xl:text-base">
+            Since 2021
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Enhanced animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+  }
+
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(-2deg); }
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 4s ease-in-out infinite 2s;
+  }
+
+  /* Enhanced feature hover effects - No Y-axis movement */
+  .about-feature {
+    transition:
+      box-shadow 0.5s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  /* Enhanced image effects */
+  img {
+    backface-visibility: hidden;
+  }
+
+  .about-bg-opacity {
+    opacity: 0.06;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  html.dark .about-bg-opacity {
+    opacity: 0.03;
+  }
+
+  /* Custom shadow for enhanced depth */
+  .shadow-3xl {
+    box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Wider container for better content distribution */
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1600px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1800px;
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import ProductsPage from "@/components/product/ProductsPage";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+const title = "Our Products - Cazzert Cakes";
+const description = "Browse our complete collection of handcrafted cakes, macarons, and sweet treats. Filter by category, price, and more to find your perfect dessert.";
+---
+
+<MainLayout title={title} description={description} ogType="website" ogUrl={Astro.url.toString()}>
+  <main>
+    <ProductsPage client:load />
+  </main>
+</MainLayout>
+
+<style>
+  /* Products page specific styles */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Loading animation */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  /* Filter panel animation */
+  .filter-panel {
+    transition: all 0.3s ease-in-out;
+  }
+</style>

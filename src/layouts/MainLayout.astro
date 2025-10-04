@@ -1,0 +1,85 @@
+---
+import { Navigation } from "@/components/navigation/Navigation";
+import ToastProvider from "@/components/ui/ToastProvider";
+import { NavigationService } from "@/services/NavigationService";
+
+const navigationData = await NavigationService.getNavigationData();
+
+import "@/styles/global.css";
+
+// Accept props for dynamic meta data
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+  ogUrl?: string;
+  structuredData?: any;
+  additionalMeta?: any[];
+}
+
+const { title = "Cazzert Cakes - Elegance Baked Fresh Since 2021", description = "Discover exquisite custom cakes by Cazzert, macarons, and sweet treats baked with passion since 2021.", ogImage, ogType = "website", ogUrl, structuredData, additionalMeta = [] } = Astro.props;
+---
+
+<html lang="en" class="scroll-smooth">
+  <head>
+    <!-- Theme script must be inline and executed immediately -->
+    <script is:inline>
+      (function () {
+        const storedTheme = localStorage.getItem("theme");
+        if (storedTheme) {
+          document.documentElement.setAttribute("data-theme", storedTheme);
+        } else {
+          const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.setAttribute("data-theme", systemPrefersDark ? "dark" : "light");
+        }
+      })();
+    </script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Robot/Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Meta Info -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Ehsan Khan (ehsan18t)" />
+
+    <!-- Theme Preference (default: Dark) -->
+    <meta name="theme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="darkreader-lock" content="light" />
+
+    <!-- OG Meta Info -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogUrl && <meta property="og:url" content={ogUrl} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <!-- Additional meta tags -->
+    {additionalMeta.map((meta) => <meta {...meta} />)}
+
+    <!-- Structured Data -->
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+
+    <!-- Allow additional head content -->
+    <slot name="head" />
+  </head>
+
+  <body>
+    <Navigation client:load navigationData={navigationData} />
+    <slot />
+    <ToastProvider client:load />
+  </body>
+</html>

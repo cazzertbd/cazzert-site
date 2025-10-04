@@ -1,0 +1,18 @@
+---
+import { OrderTrackingPage } from "@/components/orders/OrderTrackingPage";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+
+const { orderNumber } = Astro.params;
+
+if (!orderNumber) {
+  return Astro.redirect("/orders/track");
+}
+---
+
+<MainLayout title={`Order ${orderNumber} | Cazzert`}>
+  <main class="container mx-auto px-4 py-8">
+    <OrderTrackingPage orderNumber={orderNumber} client:load />
+  </main>
+</MainLayout>

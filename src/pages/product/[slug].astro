@@ -1,0 +1,99 @@
+---
+import ProductDetail from "@/components/product/ProductDetail";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { ProductService } from "@/services/ProductService";
+
+export const prerender = false;
+
+// Get the slug from the URL
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+// Fetch the product data server-side
+const product = await ProductService.getProductBySlug(slug);
+
+if (!product) {
+  return Astro.redirect("/404");
+}
+
+// Format price for meta tags
+const formattedPrice = new Intl.NumberFormat("en-BD", {
+  style: "currency",
+  currency: "BDT",
+  minimumFractionDigits: 0,
+}).format(product.price);
+
+// SEO meta data
+const title = `${product.name} - Cazzert Cakes`;
+const description = product.description || `Delicious ${product.name} cake from Cazzert. ${formattedPrice}`;
+const image = product.images[0] || "/images/default-cake.jpg";
+
+// Additional meta tags for product
+const additionalMeta = [
+  { property: "product:price:amount", content: product.price.toString() },
+  { property: "product:price:currency", content: "BDT" },
+];
+
+// Structured data for the product
+const structuredData = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  name: product.name,
+  description: description,
+  image: product.images,
+  sku: product.id,
+  offers: {
+    "@type": "Offer",
+    price: product.price,
+    priceCurrency: "BDT",
+    availability: product.stock && product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    seller: {
+      "@type": "Organization",
+      name: "Cazzert Cakes",
+    },
+  },
+  brand: {
+    "@type": "Brand",
+    name: "Cazzert",
+  },
+};
+---
+
+<MainLayout title={title} description={description} ogImage={image} ogType="product" ogUrl={Astro.url.toString()} structuredData={structuredData} additionalMeta={additionalMeta}>
+  <main>
+    <!-- Breadcrumb Navigation -->
+    <nav class="bg-bg-alt border-border-light border-b py-3">
+      <div class="container mx-auto px-4">
+        <ol class="text-text-muted flex items-center space-x-2 text-sm">
+          <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+          <li class="text-text-subtle">/</li>
+          <li><a href="/products" class="hover:text-primary transition-colors">Products</a></li>
+          <li class="text-text-subtle">/</li>
+          <li class="text-text-base font-medium">{product.name}</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Product Detail Component -->
+    <ProductDetail client:load product={product} />
+  </main>
+</MainLayout>
+
+<style>
+  /* Product page specific styles */
+  .product-gallery img {
+    transition: transform 0.3s ease;
+  }
+
+  .product-gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Breadcrumb hover effects */
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>

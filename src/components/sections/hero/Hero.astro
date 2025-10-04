@@ -1,0 +1,132 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section id="home" class="container mx-auto flex flex-col items-center overflow-hidden px-6 pt-16 pb-12 md:pt-24 md:pb-20 lg:flex-row">
+  <div class="mb-10 text-center lg:mb-0 lg:w-[51%] lg:pr-12 lg:text-left">
+    <span class="font-Secondary bg-primary-light/20 text-primary animate-fadeIn mb-4 inline-block rounded-full px-4 py-1 text-sm">Artisanal Bakery Since 2021</span>
+    <h1 class="font-Secondary animate-slideUp mb-5 text-4xl leading-tight font-bold md:text-5xl xl:text-6xl">
+      Crafting
+      <span class="text-primary relative inline-block">
+        Sweet Moments
+        <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 300 20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <!-- Decorative flourish -->
+          <path d="M8,16 C42,8.94531256 105.135742,5.94531256 150,7 C194.864258,8.05468744 259.555589,14.5117188 292,8" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" class="draw-path"></path>
+        </svg>
+      </span>, One Cake at a Time.
+    </h1>
+    <p class="text-text-muted animate-fadeIn animation-delay-300 mx-auto mb-8 max-w-xl text-lg leading-relaxed lg:mx-0">Experience artisanal cakes from Cazzert, baked with the finest ingredients since 2021. Designed with elegance, perfect for every celebration.</p>
+
+    <div class="animate-fadeIn animation-delay-500 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+      <a href="#featured" class="btn bg-primary-light hover:bg-primary text-text-light group inline-block transform rounded-lg px-8 py-3 text-lg font-semibold shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <span class="flex items-center justify-center gap-2">
+          Explore Creations
+          <Icon name="mdi:arrow-right" class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+        </span>
+      </a>
+      <a href="/products" class="btn border-border hover:bg-primary-light/20 text-primary inline-block rounded-lg border-2 bg-transparent px-8 py-3 text-lg font-semibold shadow-sm transition duration-300 hover:shadow-md">View All Products</a>
+    </div>
+
+    <div class="text-text-subtle animate-fadeIn animation-delay-700 mt-12 hidden items-center gap-4 lg:flex">
+      <span class="flex items-center gap-1">
+        <Icon name="mdi:clock" class="text-primary h-5 w-5" />
+        24hr Delivery
+      </span>
+      <span class="bg-text-subtle h-1.5 w-1.5 rounded-full"></span>
+      <span class="flex items-center gap-1">
+        <Icon name="mdi:check-decagram" class="text-primary h-5 w-5" />
+        Premium Quality
+      </span>
+    </div>
+  </div>
+
+  <div class="animate-fadeIn animation-delay-300 relative mt-8 flex justify-center lg:mt-0 lg:w-1/2">
+    <!-- Main cake image with frame design -->
+    <div class="relative z-10">
+      <img src="/images/cake-hero.jpg" alt="Elegant pink and white Cazzert drip cake with macarons" class="mx-auto h-auto w-full max-w-sm rounded-lg shadow-xl transition-transform duration-500 hover:scale-105 sm:max-w-md lg:max-w-lg" loading="eager" />
+      <div class="border-primary-light/30 absolute inset-0 -z-10 -m-3 rotate-3 transform rounded-lg border-2 opacity-70"></div>
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="from-primary-light/30 to-primary/30 absolute -right-8 -bottom-10 h-20 w-20 animate-pulse rounded-full bg-gradient-to-br opacity-60 md:-right-12 md:-bottom-12 md:h-24 md:w-24 lg:right-12 lg:-bottom-16 lg:h-32 lg:w-32"></div>
+    <div class="border-border/50 animate-float absolute -top-12 left-16 -z-0 hidden h-24 w-24 rounded-full border-2 lg:block"></div>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .animation-delay-700 {
+    animation-delay: 0.7s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  /* Add these new animations for the improved underline */
+  @keyframes drawPath {
+    from {
+      stroke-dashoffset: 400;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .draw-path {
+    stroke-dasharray: 400;
+    animation: drawPath 1.5s ease-out 0.5s forwards;
+    stroke-dashoffset: 400;
+  }
+</style>

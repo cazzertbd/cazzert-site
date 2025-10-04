@@ -1,0 +1,549 @@
+@reference "@/styles/global.css";
+
+/* ===========================================
+   NAVIGATION COMPONENT STYLES
+   =========================================== */
+
+/* Header Scroll Shadow Enhancement */
+#main-header.shadow-lg {
+  @apply shadow-xl;
+}
+
+html.dark #main-header.shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.15);
+}
+
+/* Desktop Dropdown Advanced Animations */
+.nav-dropdown-trigger svg {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-dropdown-trigger:hover svg,
+.group:hover .nav-dropdown-trigger svg {
+  transform: rotate(180deg);
+}
+
+/* Categories dropdown enhanced positioning */
+.categories-dropdown {
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .categories-dropdown,
+.nav-dropdown-trigger:focus + .categories-dropdown,
+.categories-dropdown:hover {
+  transform: translateY(0);
+}
+
+/* ===========================================
+   SIDEBAR ADVANCED ANIMATIONS
+   =========================================== */
+
+/* Sidebar slide animation enhancement */
+.sidebar-container {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sidebar link hover shimmer effect */
+.sidebar-link {
+  @apply relative overflow-hidden;
+}
+
+.sidebar-link::before {
+  @apply pointer-events-none absolute inset-0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    theme("colors.primary-light / 8%"),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.sidebar-link:hover::before {
+  transform: translateX(100%);
+}
+
+/* Active sidebar link enhanced border */
+.sidebar-link.active {
+  @apply border-l-primary/20 border-l-4;
+}
+
+/* Sidebar divider with icon */
+.sidebar-divider {
+  @apply relative my-8;
+}
+
+.sidebar-divider::before {
+  @apply border-t-border/30 absolute inset-0 flex items-center border-t;
+  content: "";
+}
+
+.sidebar-divider-icon {
+  @apply relative flex justify-center;
+}
+
+.sidebar-divider-icon span {
+  @apply bg-bg text-text-muted flex items-center px-3 text-sm;
+}
+
+/* Help section gradient enhancement */
+.help-section {
+  background: linear-gradient(
+    135deg,
+    theme("colors.primary-light / 10%"),
+    theme("colors.primary-light / 5%")
+  );
+  @apply border-primary-light/20 border;
+}
+
+/* ===========================================
+   MOBILE NAVIGATION ENHANCEMENTS
+   =========================================== */
+
+/* Mobile Navigation Container */
+.mobile-nav {
+  /* Enhanced backdrop blur */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* Better shadow for elevation */
+  box-shadow:
+    0 -4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 -2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .mobile-nav {
+  box-shadow:
+    0 -4px 6px -1px rgba(0, 0, 0, 0.2),
+    0 -2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Navigation Items */
+.mobile-nav-item {
+  /* Better tap targets for accessibility */
+  min-height: 56px;
+  min-width: 64px;
+
+  /* Improved touch feedback */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  /* Remove focus outline */
+  @apply outline-none focus:outline-none;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.96);
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile Navigation Icon Container */
+.mobile-nav-icon {
+  /* Better icon container sizing */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Improved spacing and visual hierarchy */
+  border-radius: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Cart Badge */
+.cart-badge {
+  @apply bg-primary text-white;
+  /* Better positioning to prevent cropping */
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  z-index: 10;
+
+  /* Improved sizing and spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.125rem;
+
+  /* Enhanced typography */
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+
+  /* Better visual styling */
+  border-radius: 9999px;
+  border: 2px solid theme("colors.bg-alt");
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+
+  /* Smooth animations */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cart-pulse 2s infinite;
+}
+
+html.dark .cart-badge {
+  @apply bg-primary;
+  border-color: theme("colors.bg-alt");
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart badge hover state */
+.mobile-nav-item:hover .cart-badge {
+  transform: scale(1.1);
+  background-color: theme("colors.primary-dark");
+}
+
+/* Cart badge pulse animation */
+@keyframes cart-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Mobile sidebar trigger rotation */
+.mobile-sidebar-trigger svg {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-sidebar-trigger.open svg {
+  transform: rotate(90deg);
+}
+
+/* Mobile Navigation Labels */
+.mobile-nav-label {
+  /* Better typography for labels */
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+
+  /* Prevent text wrapping */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ===========================================
+   ENHANCED FOCUS STATES
+   =========================================== */
+
+/* Custom focus ring for navigation elements (excluding mobile nav items) */
+.nav-focus:not(.mobile-nav-item) {
+  @apply focus:ring-primary/50 focus:ring-2 focus:ring-offset-2 focus:outline-none;
+}
+
+/* Enhanced focus for dark mode (excluding mobile nav items) */
+html.dark .nav-focus:not(.mobile-nav-item) {
+  @apply focus:ring-offset-bg-alt;
+}
+
+/* Better focus for mobile navigation */
+.mobile-nav-item:focus {
+  @apply ring-primary/50 ring-offset-bg-alt ring-2 ring-offset-2 outline-none;
+}
+
+/* ===========================================
+   BACKDROP BLUR ENHANCEMENTS
+   =========================================== */
+
+/* Enhanced backdrop for sidebar */
+.sidebar-backdrop {
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced backdrop for mobile */
+@supports (backdrop-filter: blur(8px)) {
+  .mobile-nav {
+    backdrop-filter: blur(16px);
+  }
+
+  #main-header {
+    backdrop-filter: blur(16px);
+  }
+}
+
+/* ===========================================
+   LOADING & MICRO-INTERACTIONS
+   =========================================== */
+
+/* Icon loading state */
+.icon-loading {
+  @apply animate-pulse opacity-60;
+}
+
+/* Icon transition animations */
+.icon-transition {
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.15s ease;
+}
+
+/* Smooth icon swaps */
+.icon-fade-out {
+  @apply scale-75 opacity-0;
+}
+
+.icon-fade-in {
+  @apply scale-100 opacity-100;
+}
+
+/* Category count badge animation */
+.category-count {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-link:hover .category-count {
+  transform: scale(1.05);
+}
+
+/* ===========================================
+   ACCESSIBILITY ENHANCEMENTS
+   =========================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .sidebar-container {
+    @apply border-l-2;
+  }
+
+  .mobile-nav {
+    @apply border-t-2;
+  }
+
+  .sidebar-link.active {
+    @apply border-l-8;
+  }
+
+  .nav-link,
+  .sidebar-link {
+    @apply focus:ring-primary/70 focus:ring-4;
+  }
+
+  /* Mobile nav items still get no focus ring even in high contrast */
+  .mobile-nav-item {
+    @apply focus:ring-0 focus:outline-none;
+  }
+
+  .cart-badge {
+    border-width: 3px;
+    font-weight: 800;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-container,
+  .sidebar-backdrop,
+  .mobile-nav,
+  .categories-dropdown,
+  .sidebar-link,
+  .mobile-nav-item,
+  .sidebar-link::before,
+  .icon-transition,
+  .category-count,
+  .mobile-sidebar-trigger svg,
+  .nav-dropdown-trigger svg,
+  .cart-badge {
+    transition-duration: 0.1s;
+  }
+
+  .sidebar-link::before {
+    @apply hidden;
+  }
+
+  .mobile-nav-item:active {
+    transform: none;
+  }
+
+  .cart-badge {
+    animation: none;
+  }
+
+  .icon-loading {
+    @apply animate-none;
+  }
+}
+
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+
+@media print {
+  .mobile-nav,
+  .sidebar-container,
+  .sidebar-backdrop {
+    @apply hidden;
+  }
+
+  #main-header {
+    @apply static shadow-none;
+    background: white !important;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE BREAKPOINT ENHANCEMENTS
+   =========================================== */
+
+/* Enhanced mobile breakpoints */
+@media (max-width: 640px) {
+  .sidebar-container {
+    @apply w-80 max-w-[90vw];
+  }
+
+  .categories-dropdown {
+    @apply w-72;
+  }
+
+  /* Better mobile nav sizing for smaller screens */
+  .mobile-nav-container {
+    @apply max-w-xs gap-0.5;
+  }
+
+  .mobile-nav-item {
+    @apply px-2 py-2;
+  }
+
+  .mobile-nav-icon {
+    @apply h-7 w-7;
+  }
+
+  .mobile-nav-icon svg {
+    @apply h-4 w-4;
+  }
+}
+
+/* Better spacing for larger phones */
+@media (min-width: 375px) and (max-width: 767px) {
+  .mobile-nav-container {
+    @apply max-w-sm gap-1;
+  }
+}
+
+/* Desktop dropdown keyboard navigation */
+@media (min-width: 768px) {
+  .nav-dropdown-trigger:focus + .categories-dropdown,
+  .nav-dropdown-trigger:focus-visible + .categories-dropdown {
+    @apply visible opacity-100;
+    transform: translateY(0);
+  }
+
+  .group:focus-within .categories-dropdown {
+    @apply visible opacity-100;
+    transform: translateY(0);
+  }
+
+  /* Hide mobile navigation completely on desktop */
+  .mobile-nav {
+    @apply hidden;
+  }
+}
+
+/* ===========================================
+   DARK MODE SPECIFIC ENHANCEMENTS
+   =========================================== */
+
+html.dark .categories-dropdown {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .sidebar-container {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+html.dark .help-section {
+  background: linear-gradient(
+    135deg,
+    theme("colors.primary-light / 8%"),
+    theme("colors.primary-light / 3%")
+  );
+}
+
+/* ===========================================
+   PERFORMANCE OPTIMIZATIONS
+   =========================================== */
+
+/* GPU acceleration for smooth animations */
+.sidebar-container,
+.mobile-nav,
+.categories-dropdown,
+.sidebar-link::before,
+.cart-badge {
+  will-change: transform;
+}
+
+/* Optimize repaints */
+.sidebar-link,
+.mobile-nav-item,
+.category-count,
+.cart-badge {
+  contain: layout style paint;
+}
+
+/* ===========================================
+   FALLBACKS FOR OLDER BROWSERS
+   =========================================== */
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(8px)) {
+  .sidebar-backdrop {
+    @apply bg-black/60;
+  }
+
+  #main-header {
+    @apply bg-bg-alt/95;
+  }
+
+  .mobile-nav {
+    @apply bg-bg-alt;
+  }
+}
+
+/* Fallback for browsers without CSS Grid */
+@supports not (display: grid) {
+  .mobile-nav-container {
+    @apply flex;
+  }
+}
+
+/* ===========================================
+   CUSTOM SCROLLBAR FOR SIDEBAR
+   =========================================== */
+
+.sidebar-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--bg-alt);
+}
+
+.sidebar-content::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  @apply bg-bg-alt rounded-full;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/50;
+}

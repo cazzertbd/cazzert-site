@@ -1,0 +1,179 @@
+---
+import About from "@/components/sections/about/About.astro";
+import Contact from "@/components/sections/contact/Contact.astro";
+import Footer from "@/components/sections/footer/Footer.astro";
+import Hero from "@/components/sections/hero/Hero.astro";
+import Products from "@/components/sections/products/Products.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+---
+
+<MainLayout>
+  <main>
+    <Hero />
+    <Products />
+    <About />
+    <Contact />
+
+    <!-- Dynamic Content -->
+    <div id="toast-container" class="fixed right-4 bottom-20 z-50 flex flex-col gap-3 md:right-10 md:bottom-10"></div>
+  </main>
+
+  <Footer />
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // --- Elements ---
+      const sidebar = document.getElementById("sidebar-menu");
+      const sidebarOpenBtn = document.getElementById("sidebar-open-button");
+      const sidebarCloseBtn = document.getElementById("sidebar-close-button");
+      const sidebarOverlay = document.getElementById("sidebar-overlay");
+      const mobileSidebarTrigger = document.getElementById("mobile-sidebar-trigger");
+      const sidebarLinks = sidebar?.querySelectorAll(".sidebar-link"); // Includes theme toggle now
+      const header = document.getElementById("main-header");
+      const yearSpan = document.getElementById("current-year");
+      const mobileBottomNav = document.querySelector(".mobile-bottom-nav") as HTMLElement | null;
+      const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+
+      // --- Sidebar Logic ---
+      const openSidebar = (): void => {
+        if (!sidebar || !sidebarOverlay) return;
+        sidebar.classList.add("open");
+        sidebarOverlay.classList.add("open");
+        document.body.classList.add("sidebar-open");
+        const firstFocusableElement = sidebar.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])') as HTMLElement | null;
+        if (firstFocusableElement) {
+          firstFocusableElement.focus();
+        }
+      };
+
+      const closeSidebar = (): void => {
+        if (!sidebar || !sidebarOverlay) return;
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        document.body.classList.remove("sidebar-open");
+
+        if (sidebarOpenBtn && window.getComputedStyle(sidebarOpenBtn).display !== "none") {
+          if (sidebar.contains(document.activeElement)) {
+            sidebarOpenBtn.focus();
+          }
+        } else if (mobileSidebarTrigger && window.getComputedStyle(mobileSidebarTrigger).display !== "none") {
+          if (sidebar.contains(document.activeElement)) {
+            mobileSidebarTrigger.focus();
+          }
+        }
+      };
+
+      if (sidebarOpenBtn) sidebarOpenBtn.addEventListener("click", openSidebar);
+      if (mobileSidebarTrigger) mobileSidebarTrigger.addEventListener("click", openSidebar);
+      if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+      if (sidebarLinks) {
+        sidebarLinks.forEach((link) => {
+          // Now targets buttons too
+          // Close only if it's a nav link, not the theme toggle
+          if (link.tagName === "A" && link.getAttribute("href") && link.getAttribute("href") !== "#") {
+            link.addEventListener("click", closeSidebar);
+          }
+        });
+      }
+
+      document.addEventListener("keydown", (event: KeyboardEvent): void => {
+        if (event.key === "Escape" && sidebar && sidebar.classList.contains("open")) {
+          closeSidebar();
+        }
+      });
+
+      // --- Copyright Year ---
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
+
+      // --- Header Scroll Effect ---
+      if (header) {
+        const handleScroll = (): void => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          if (scrollTop > 50) {
+            header.classList.add("shadow-lg");
+            header.classList.remove("shadow-sm");
+          } else {
+            header.classList.remove("shadow-lg");
+            header.classList.add("shadow-sm");
+          }
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+      }
+
+      // --- Body Padding for Mobile Nav ---
+      function adjustBodyPadding(): void {
+        if (mobileBottomNav && window.getComputedStyle(mobileBottomNav).display !== "none") {
+          document.body.style.paddingBottom = `${mobileBottomNav.offsetHeight}px`;
+        } else {
+          document.body.style.paddingBottom = "0";
+        }
+      }
+
+      adjustBodyPadding();
+      window.addEventListener("resize", adjustBodyPadding);
+      window.addEventListener("orientationchange", adjustBodyPadding);
+
+      // --- Mobile Bottom Nav Active State & Smooth Scrolling ---
+      function setActiveNavItem(targetId: string): void {
+        if (!targetId) targetId = "home";
+        mobileNavItems.forEach((item) => {
+          item.classList.remove("active");
+          const href = item.getAttribute("href");
+          if (href && href.endsWith(`#${targetId}`)) {
+            item.classList.add("active");
+          } else if (targetId === "home" && href === "#home") {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      function handleNavigation(): void {
+        const hash = window.location.hash;
+        if (hash) {
+          const targetElement = document.querySelector(hash) as HTMLElement | null;
+          if (targetElement) {
+            const headerOffset = header ? header.offsetHeight : 0;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+          }
+          setActiveNavItem(hash.substring(1));
+        } else {
+          setActiveNavItem("home");
+        }
+      }
+
+      handleNavigation(); // Initial check
+      window.addEventListener("hashchange", handleNavigation);
+
+      mobileNavItems.forEach((item) => {
+        // Listener for smooth scroll from nav
+        item.addEventListener("click", function (e: Event): void {
+          const target = e.currentTarget as HTMLAnchorElement;
+          const href = target.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            e.preventDefault();
+            window.location.hash = href;
+          } // handleNavigation called by hashchange
+        });
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        // Listener for all other internal links
+        anchor.addEventListener("click", function (e: Event): void {
+          const target = e.currentTarget as HTMLAnchorElement;
+          const href = target.getAttribute("href");
+          if (href && href !== "#" && document.querySelector(href)) {
+            e.preventDefault();
+            window.location.hash = href;
+          } // handleNavigation called by hashchange
+        });
+      });
+    });
+  </script>
+</MainLayout>

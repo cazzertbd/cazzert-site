@@ -1,0 +1,57 @@
+---
+import LoginForm from "@/components/login/LoginForm.tsx";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const prerender = false;
+
+const redirectTo = Astro.url.searchParams.get("redirectTo") || "/";
+---
+
+<MainLayout title="Login | Cazzert">
+  <main class="login-page bg-bg relative min-h-[calc(100vh-10rem)] w-full">
+    <!-- Content -->
+    <div class="flex min-h-[calc(100vh-10rem)] items-center justify-center px-4 py-12">
+      <div class="w-full max-w-sm">
+        <!-- Login Form -->
+        <LoginForm client:load redirectTo={redirectTo} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<style>
+  .login-form {
+    background: var(--bg-alt);
+    border: 1px solid var(--border-light);
+  }
+
+  .form-group input {
+    background-color: var(--bg);
+    border-color: var(--border-light);
+    color: var(--text-base);
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus {
+    border-color: var(--primary);
+    outline: none;
+  }
+
+  .form-group input::placeholder {
+    color: var(--text-subtle);
+  }
+
+  .login-btn {
+    transition: background-color 0.2s ease;
+  }
+
+  .login-btn:hover {
+    background: var(--primary-dark);
+  }
+
+  /* Dark theme adjustments */
+  html.dark .form-group input {
+    background-color: var(--bg-alt);
+    border-color: var(--border);
+  }
+</style>

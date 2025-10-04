@@ -1,0 +1,10 @@
+---
+import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Checkout | Cazzert">
+  <main class="container mx-auto px-4 py-8">
+    <CheckoutForm client:load />
+  </main>
+</MainLayout>
